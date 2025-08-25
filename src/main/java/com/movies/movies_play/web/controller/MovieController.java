@@ -1,8 +1,10 @@
 package com.movies.movies_play.web.controller;
 
 import com.movies.movies_play.domain.dto.MovieDto;
+import com.movies.movies_play.domain.dto.SuggestRequestDto;
 import com.movies.movies_play.domain.dto.UpdateMovieDto;
 import com.movies.movies_play.domain.service.MovieService;
+import com.movies.movies_play.domain.service.MoviesPlayAiService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +15,11 @@ import java.util.List;
 @RequestMapping("/movies")
 public class MovieController {
     private final MovieService movieService;
+    private final MoviesPlayAiService aiService;
 
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService, MoviesPlayAiService aiService) {
         this.movieService = movieService;
+        this.aiService = aiService;
     }
 
     @GetMapping
@@ -32,6 +36,12 @@ public class MovieController {
         }
 
         return ResponseEntity.ok(movieDto);
+    }
+
+    @PostMapping("/suggest")
+    public ResponseEntity<String> generateMoviesSuggestion(@RequestBody SuggestRequestDto suggestRequestDto) {
+        return ResponseEntity.ok(this.aiService.generateMoviesSuggestion(suggestRequestDto.userPreferences()));
+
     }
 
     @PostMapping

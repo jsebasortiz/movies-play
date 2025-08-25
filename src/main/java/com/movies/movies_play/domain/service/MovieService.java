@@ -3,7 +3,7 @@ package com.movies.movies_play.domain.service;
 import com.movies.movies_play.domain.dto.MovieDto;
 import com.movies.movies_play.domain.dto.UpdateMovieDto;
 import com.movies.movies_play.domain.repository.MovieRepository;
-import com.movies.movies_play.persistence.entity.MovieEntity;
+import dev.langchain4j.agent.tool.Tool;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +16,7 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
+    @Tool("Busca todas las peliculas que existan en la plataforma")
     public List<MovieDto> getAll() {
         return this.movieRepository.getAll();
     }
