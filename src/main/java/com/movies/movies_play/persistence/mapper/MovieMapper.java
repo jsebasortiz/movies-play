@@ -2,6 +2,7 @@ package com.movies.movies_play.persistence.mapper;
 
 import com.movies.movies_play.domain.dto.MovieDto;
 import com.movies.movies_play.persistence.entity.MovieEntity;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -18,4 +19,7 @@ public interface MovieMapper {
     MovieDto toDto(MovieEntity entity);
 
     List<MovieDto> toDto(Iterable<MovieEntity> entities);
+    @InheritInverseConfiguration
+    @Mapping(source = "genre", target = "genero", qualifiedByName = "genreToString")
+    MovieEntity toEntity(MovieDto dto);
 }
