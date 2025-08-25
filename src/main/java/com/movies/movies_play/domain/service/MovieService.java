@@ -1,6 +1,7 @@
 package com.movies.movies_play.domain.service;
 
 import com.movies.movies_play.domain.dto.MovieDto;
+import com.movies.movies_play.domain.dto.UpdateMovieDto;
 import com.movies.movies_play.domain.repository.MovieRepository;
 import com.movies.movies_play.persistence.entity.MovieEntity;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,21 @@ public class MovieService {
     public List<MovieDto> getAll() {
         return this.movieRepository.getAll();
     }
+
     public MovieDto getById(long id) {
         return this.movieRepository.getById(id);
     }
 
     public MovieDto add(MovieDto movieDto) {
         return this.movieRepository.save(movieDto);
+    }
+
+    public MovieDto update(Long id, UpdateMovieDto updateMovieDto) {
+        return this.movieRepository.update(id, updateMovieDto);
+    }
+
+    public MovieDto deleteById(Long id) {
+        return this.movieRepository.delete(id);
     }
 
 }

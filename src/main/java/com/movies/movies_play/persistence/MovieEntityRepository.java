@@ -1,12 +1,15 @@
 package com.movies.movies_play.persistence;
 
 import com.movies.movies_play.domain.dto.MovieDto;
+import com.movies.movies_play.domain.dto.UpdateMovieDto;
 import com.movies.movies_play.domain.repository.MovieRepository;
 import com.movies.movies_play.persistence.crud.CrudMovieEntity;
 import com.movies.movies_play.persistence.entity.MovieEntity;
 import com.movies.movies_play.persistence.mapper.MovieMapper;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -35,6 +38,26 @@ public class MovieEntityRepository implements MovieRepository {
         MovieEntity movieEntity = this.movieMapper.toEntity(movieDto);
         movieEntity.setEstado("D");
 
+        return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
+    }
+
+    @Override
+    public MovieDto update(Long id, UpdateMovieDto updateMovieDto) {
+        MovieEntity movieEntity = this.crudMovieEntity.findById(id).orElse(null);
+
+        if (movieEntity == null) return null;
+
+        this.movieMapper.updateEntityFromDto(updateMovieDto, movieEntity);
+        return this.movieMapper.toDto(crudMovieEntity.save(movieEntity));
+    }
+
+    @Override
+    public MovieDto delete(Long id) {
+        MovieEntity movieEntity = this.crudMovieEntity.findById(id).orElse(null);
+
+        if (movieEntity == null) return null;
+
+        movieEntity.setEstado("N");
         return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
     }
 }
