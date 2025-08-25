@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloController {
+
     private final MoviesPlayAiService aiService;
     private final String plataform;
 
